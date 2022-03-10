@@ -7,10 +7,10 @@ from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dat
 from pyspark.sql.types import TimestampType
 
 config = configparser.ConfigParser()
-config.read('dl.cfg')
+config.read('dl.cfg', encoding='utf-8')
 
-os.environ['AWS_ACCESS_KEY_ID'] = config['AWS_ACCESS_KEY_ID']
-os.environ['AWS_SECRET_ACCESS_KEY'] = config['AWS_SECRET_ACCESS_KEY']
+os.environ['AWS_ACCESS_KEY_ID'] = config['KEYS']['AWS_ACCESS_KEY_ID']
+os.environ['AWS_SECRET_ACCESS_KEY'] = config['KEYS']['AWS_SECRET_ACCESS_KEY']
 
 
 def create_spark_session():
@@ -27,7 +27,6 @@ def create_spark_session():
 def process_song_data(spark, input_data, output_data):
     """"
     Process song data files
-
     """
     # get filepath to song data file
     song_data = input_data + "song_data/*/*/*/*.json"
@@ -120,6 +119,7 @@ def main():
     """
     Main function
     """
+
     # create spark session
     spark = create_spark_session()
 
